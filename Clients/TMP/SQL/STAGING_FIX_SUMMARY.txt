@@ -1,0 +1,113 @@
+-- ========================================================================
+-- STAGING LOGIC FIX + DATA QUALITY WARNINGS
+-- Summary of Changes to vw_MachineStatus_GG_FIXED_STAGING.sql
+-- ========================================================================
+
+## THE PROBLEM
+Jobs with Status='C' (Complete) were showing as "STAGING" because:
+1. Ancient setup operations (130+ days old) were never closed
+2. The query prioritized checking setup status BEFORE checking if production was complete
+3. Result: Completed machines showed "STAGING-IDLE | 130d" instead of "OFFLINE"
+
+## THE SOLUTION
+
+### 1. CHANGED PRIORITY ORDER
+**Old Logic:**
+  Priority 1: Check if Status = 'C' → Look for setup → Show STAGING
+  Priority 2: Check for ACTIVE/IDLE
+
+**New Logic:**
+  Priority 1: Check if Status = 'C' → Show OFFLINE (with warning if stale setup)
+  Priority 2: Check if no operation → Look for RECENT setup (within 7 days)
+  Priority 3: Check for OverPlan
+  Priority 4: Check for ACTIVE (activity within 8 hours)
+  Priority 5: Check for IDLE
+
+### 2. ADDED TIME FILTER FOR SETUP
+Only show STAGING if setup was started within the last 7 days:
+```sql
+WHEN setup_for_machine.setup_status = 'ACTIVE SUP' 
+     AND setup_for_machine.setup_start >= DATEADD(DAY, -7, GETDATE())
+THEN 'STAGING'
+```
+
+This filters out ancient, forgotten setup operations.
+
+### 3. ADDED DATA QUALITY WARNINGS
+
+**Warning Flag (⚠):** Shows when there's stale data needing cleanup
+
+**MachineStatus Field:**
+- Complete job with open setup: `OFFLINE | ⚠ | O`
+- Complete job, no issues: `OFFLINE | O`
+
+**OperatorActivity Field:**
+Shows cleanup details when Status='C' and stale setup exists:
+- `⚠ CLEANUP: Setup Sandra_J still open from SM-130h`
+
+This lets supervisors:
+✅ Filter for jobs needing cleanup (contains ⚠)
+✅ See exactly which setup operations need closing
+✅ Know how long the setup has been open
+
+### 4. IMPROVED CUSTOMERPARTJOB DISPLAY
+
+**For Complete Jobs:**
+- With stale setup: `COMPLETE: Customer | Part | Job | ⚠CLEANUP`
+- Without issues: `COMPLETE: Customer | Part | Job`
+
+This makes it immediately clear the job is done.
+
+## RESULTS FOR YOUR EXAMPLE
+
+**Job 1317633, Machine L20SW7:**
+
+**BEFORE (Incorrect):**
+- MachineStatus: `STAGING-IDLE | 130d`
+- CustomerPartJob: `STAGING: SAP | 805004T137 | 1317633`
+- OperatorActivity: `SUP: Sandra_J | SM-0h`
+
+**AFTER (Correct):**
+- MachineStatus: `OFFLINE | ⚠ | O`
+- CustomerPartJob: `COMPLETE: SAP | 805004T137 | 1317633 | ⚠CLEANUP`
+- OperatorActivity: `⚠ CLEANUP: Setup Sandra_J still open from SM-0h`
+- StatusDuration: `OFFLINE | ⚠ | 45d`
+
+## HOW TO USE IN REACT
+
+**Filter for jobs needing cleanup:**
+```javascript
+// Show only machines with data quality issues
+.filter(row => row.MachineStatus.includes('⚠'))
+
+// Or in OperatorActivity
+.filter(row => row.OperatorActivity.includes('CLEANUP'))
+```
+
+**Highlight warnings in UI:**
+```javascript
+const statusColor = (status) => {
+  if (status.includes('⚠')) return 'warning-yellow';
+  if (status.includes('OFFLINE')) return 'gray';
+  if (status.includes('ACTIVE')) return 'green';
+  // etc...
+}
+```
+
+## WHAT DIDN'T CHANGE
+- FirstRun indicator (F/O) still works
+- All other status logic (ACTIVE, IDLE, OverPlan) unchanged
+- Part 2 (missing machines) logic unchanged
+- All existing metrics and calculations preserved
+
+## FILES CREATED
+1. vw_MachineStatus_GG_FIXED_STAGING.sql - Complete fixed SQL
+2. This summary document
+
+## NEXT STEPS
+1. Test the query in SQL Server Management Studio
+2. Compare results with current view
+3. Deploy to production when satisfied
+4. Update React app to handle ⚠ warnings
+
+========================================================================

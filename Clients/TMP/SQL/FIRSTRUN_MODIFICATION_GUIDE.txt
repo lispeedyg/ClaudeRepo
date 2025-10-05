@@ -1,0 +1,56 @@
+-- FIRSTRUN INDICATOR MODIFICATION GUIDE
+-- ======================================
+-- 
+-- To add FirstRun indicator to vw_MachineStatus_GG.sql:
+--
+-- 1. ADD THIS CTE after the "WITH JobCompletionPredictions AS" CTE
+--    (insert right before "MachineStatusCTE AS"):
+
+,FirstRunIndicator AS (
+    SELECT 
+        j_curr.Job,
+        j_curr.Part_Number,
+        -- Check if there are any previous jobs with this part number
+        CASE 
+            WHEN j_curr.Part_Number IS NULL OR LTRIM(RTRIM(j_curr.Part_Number)) = '' THEN 'O'  -- No part number = Old
+            WHEN EXISTS (
+                SELECT 1 
+                FROM THURO.dbo.Job j_prev with (NoLock)
+                WHERE j_prev.Part_Number = j_curr.Part_Number
+                  AND j_prev.Job < j_curr.Job  -- Previous job (lower job number)
+                  AND j_prev.Status IN ('Complete', 'Closed', 'Shipped')  -- Only count completed jobs
+            ) THEN 'O'  -- Old part
+            ELSE 'F'     -- FirstRun part
+        END AS FirstRunFlag
+    FROM THURO.dbo.Job j_curr with (NoLock)
+)
+
+-- 2. ADD THIS JOIN in the main query (in MachineStatusCTE, first SELECT):
+--    Add this line after the "LEFT JOIN ship_dates ON ship_dates.JobSO = j.Job" line:
+            
+            -- FirstRun indicator
+            LEFT JOIN FirstRunIndicator first_run ON first_run.Job = j.Job
+
+-- 3. MODIFY THE FINAL SELECT STATEMENT:
+--    Change the MachineStatus output from:
+    ISNULL(CASE 
+        WHEN jobs_on_machine > 1 AND MachineStatus IN ('ACTIVE', 'IDLE', 'OverPlan', 'STAGING', 'STAGING-IDLE', 'STAGED')
+        THEN MachineStatus + '??'
+        ELSE MachineStatus
+    END, '') AS MachineStatus,
+
+--    To:
+    ISNULL(CASE 
+        WHEN jobs_on_machine > 1 AND MachineStatus IN ('ACTIVE', 'IDLE', 'OverPlan', 'STAGING', 'STAGING-IDLE', 'STAGED')
+        THEN MachineStatus + '?? | ' + ISNULL(FirstRunFlag, 'O')
+        ELSE MachineStatus + ' | ' + ISNULL(FirstRunFlag, 'O')
+    END, '') AS MachineStatus,
+
+-- 4. ADD FirstRunFlag TO THE filtered SUBQUERY:
+--    Add this to the columns selected in the MachineStatusCTE:
+            first_run.FirstRunFlag,
+
+--    And add it to the filtered subquery columns at the end.
+
+-- NOTE: The UNION ALL query for missing machines should default to 'O' since they have no current job.
+

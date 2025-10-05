@@ -1,0 +1,82 @@
+-- FIRSTRUN MODIFICATION FOR vw_MachineStatus_GG.sql
+-- ====================================================
+-- This file contains the exact code snippets to add FirstRun indicator
+
+-- STEP 1: Add this CTE after "JobCompletionPredictions AS (" closes
+-- Insert this RIGHT AFTER the line ending with:
+-- "             historical_perf.historical_parts_per_hour, historical_perf.historical_scrap_rate, historical_perf.days_of_experience"
+-- And BEFORE the line: "MachineStatusCTE AS ("
+
+,FirstRunIndicator AS (
+    -- Check if part number has been run before (completed jobs only)
+    SELECT 
+        j_curr.Job,
+        j_curr.Part_Number,
+        CASE 
+            -- No part number = treat as Old
+            WHEN j_curr.Part_Number IS NULL OR LTRIM(RTRIM(j_curr.Part_Number)) = '' THEN 'O'
+            -- Check if any previous jobs with this part number were completed
+            WHEN EXISTS (
+                SELECT 1 
+                FROM THURO.dbo.Job j_prev with (NoLock)
+                WHERE j_prev.Part_Number = j_curr.Part_Number
+                  AND j_prev.Job < j_curr.Job  -- Previous job (lower job number)
+                  AND j_prev.Status IN ('Complete', 'Closed', 'Shipped')  -- Only completed jobs count
+            ) THEN 'O'  -- Old/Repeat part
+            ELSE 'F'     -- FirstRun part
+        END AS FirstRunFlag
+    FROM THURO.dbo.Job j_curr with (NoLock)
+)
+
+-- STEP 2: Add this JOIN in the main query (PART 1 of UNION ALL)
+-- Add this line AFTER: "LEFT JOIN ship_dates ON ship_dates.JobSO = j.Job"
+-- And BEFORE: "WHERE"
+
+            -- FirstRun indicator join
+            LEFT JOIN FirstRunIndicator first_run ON first_run.Job = j.Job
+
+-- STEP 3: Add FirstRunFlag column to the SELECT in MachineStatusCTE
+-- Add this line at the end of the main SELECT, AFTER:
+-- "ISNULL(j.Job,0) DESC"
+-- And RIGHT BEFORE: ") AS machine_rank"
+
+            ,first_run.FirstRunFlag  -- Add FirstRun indicator
+
+-- STEP 4: For PART 2 of UNION ALL (missing machines section)
+-- Add this after all the other columns in that SELECT, before "1 AS jobs_on_machine":
+
+            ,'O' AS FirstRunFlag  -- Missing machines default to Old (no active job)
+
+-- STEP 5: Modify the FINAL SELECT statement at the bottom
+-- FIND this section (around line 1000):
+--     ISNULL(CASE 
+--         WHEN jobs_on_machine > 1 AND MachineStatus IN ('ACTIVE', 'IDLE', 'OverPlan', 'STAGING', 'STAGING-IDLE', 'STAGED')
+--         THEN MachineStatus + '??'
+--         ELSE MachineStatus
+--     END, '') AS MachineStatus,
+
+-- REPLACE WITH:
+    ISNULL(CASE 
+        WHEN jobs_on_machine > 1 AND MachineStatus IN ('ACTIVE', 'IDLE', 'OverPlan', 'STAGING', 'STAGING-IDLE', 'STAGED')
+        THEN MachineStatus + '?? | ' + ISNULL(FirstRunFlag, 'O')
+        ELSE MachineStatus + ' | ' + ISNULL(FirstRunFlag, 'O')
+    END, '') AS MachineStatus,
+
+-- STEP 6: Add FirstRunFlag to the filtered subquery columns
+-- In the final SELECT, in the "FROM ( SELECT *," section, 
+-- make sure FirstRunFlag is included in the "SELECT *" or add it explicitly if needed
+-- The "SELECT *" should already pick it up from MachineStatusCTE
+
+-- ====================
+-- TESTING
+-- ====================
+-- After making these changes, test with:
+-- SELECT TOP 10 Machine, MachineStatus, CustomerPartJob 
+-- FROM [vw_MachineStatus_GG] 
+-- WHERE MachineStatus LIKE '%|%'
+
+-- You should see output like:
+-- Machine | MachineStatus
+-- SW01    | ACTIVE | 2d-15Mh | F    (FirstRun part)
+-- SW02    | IDLE | 1d-8Mh | O     (Repeat part)
+
