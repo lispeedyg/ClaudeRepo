@@ -34,3 +34,11 @@ __pycache__/
 
 # Windows thumbnail cache
 ehthumbs.db
+
+# Client Data - be selective about what you commit
+# Uncomment specific patterns if you need to exclude sensitive client data
+# Clients/*/sensitive/
+# Clients/*/*.csv
+# Clients/*/*.xlsx
+# *.mdb
+# *.accdb
