@@ -1,0 +1,36 @@
+# Operating System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor/IDE Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary Files
+*.tmp
+*.temp
+*.log
+
+# Backup Files
+*.bak
+*.backup
+*~
+
+# Environment Files (if you add any sensitive data later)
+.env
+.env.local
+
+# Node modules (if you add any JavaScript tools)
+node_modules/
+
+# Python cache (if you add any Python scripts)
+__pycache__/
+*.pyc
+*.pyo
+
+# Windows thumbnail cache
+ehthumbs.db

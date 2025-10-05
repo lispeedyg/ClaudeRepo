@@ -1,0 +1,111 @@
+{
+  "internal_stakeholders": {
+    "core_team": [
+      {
+        "name": "Owner",
+        "role": "CEO/Lead Consultant",
+        "expertise": "Quality systems, CMMC compliance, data analytics, technology implementation",
+        "background": "Chemical Engineer, 25+ years UL experience"
+      },
+      {
+        "name": "Tom",
+        "role": "Trainer and Quality Auditor",
+        "expertise": "Quality system training, audit procedures, process optimization"
+      }
+    ],
+    "contractors": [
+      "Used as needed for specialized technical requirements",
+      "Specific contractor relationships not documented in this system"
+    ]
+  },
+  "external_partners": {
+    "clients": [
+      {
+        "industry": "Aerospace/Defense Contractors (2nd/3rd tier suppliers)",
+        "services": "CMMC compliance, quality systems, data analytics",
+        "notes": "Primary growth area due to defense supply chain requirements"
+      },
+      {
+        "industry": "Automotive Manufacturing", 
+        "services": "Quality systems (ISO/TS 16949), process optimization",
+        "notes": "Established client base with quality system expertise"
+      },
+      {
+        "industry": "General Manufacturing (electronics, plastics, textiles, etc.)",
+        "services": "ISO 9001, quality systems, manufacturing analytics",
+        "notes": "Broad industry experience from UL auditing background"
+      },
+      {
+        "specific_project": "Machining Company (JobAI system client)",
+        "services": "Custom AI-powered manufacturing analytics and dashboard development",
+        "notes": "Advanced data analytics implementation"
+      }
+    ],
+    "technology_vendors": [
+      "Microsoft (Teams, PowerBI, SQL Server)",
+      "Various ERP providers (JobBoss, etc.)",
+      "Cybersecurity tool vendors for CMMC implementations"
+    ],
+    "professional_networks": [
+      "ISO certification bodies and registrars",
+      "CMMC certification organizations",
+      "Manufacturing and quality professional associations"
+    ]
+  },
+  "communication_preferences": {
+    "client_meetings": "MS Teams for remote collaboration, on-site visits as required for audits",
+    "reporting_methods": [
+      "Real-time dashboards for ongoing monitoring",
+      "Excel-based reports deployed via Teams",
+      "PowerBI dashboards for executive-level insights",
+      "Formal audit reports and compliance documentation",
+      "Knowledge transfer sessions and training materials"
+    ],
+    "escalation_procedures": [
+      "Direct owner contact for all critical issues",
+      "Tom handles quality system and training escalations",
+      "Client-specific communication protocols as established in contracts"
+    ]
+  },
+  "project_roles": {
+    "cmmc_implementation": [
+      {
+        "role": "Project Lead",
+        "person": "Owner",
+        "responsibilities": "Technical implementation, PowerShell scripting, InfluxDB/Grafana setup, client liaison"
+      },
+      {
+        "role": "Quality Systems Integration",
+        "person": "Tom",
+        "responsibilities": "Mapping existing quality systems to CMMC requirements, training development"
+      }
+    ],
+    "jobai_system": [
+      {
+        "role": "Technical Lead",
+        "person": "Owner", 
+        "responsibilities": "SQL view development, PowerBI integration, browser interface design, AI logic implementation"
+      }
+    ],
+    "excel_dashboards": [
+      {
+        "role": "Dashboard Developer",
+        "person": "Owner",
+        "responsibilities": "Excel design, PowerBI connectivity, Teams deployment, user training"
+      },
+      {
+        "role": "Process Consultant",
+        "person": "Tom",
+        "responsibilities": "Workflow optimization, user requirements gathering, quality metrics definition"
+      }
+    ],
+    "powerbi_connectivity": [
+      {
+        "role": "Data Architect",
+        "person": "Owner",
+        "responsibilities": "SQL optimization, PowerBI configuration, performance tuning, security implementation"
+      }
+    ]
+  },
+  "last_updated": "2025-08-22"
+}

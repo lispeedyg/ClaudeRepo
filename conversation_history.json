@@ -1,0 +1,101 @@
+{
+  "conversation_categories": {
+    "cmmc_implementation": {
+      "key_topics": [
+        "USB event monitoring and compliance",
+        "InfluxDB authentication issues", 
+        "PowerShell scripting and deployment",
+        "Telegraf configuration and upgrades",
+        "Grafana dashboard development",
+        "Enterprise PowerShell remoting setup"
+      ],
+      "recent_discussions": [
+        {
+          "date": "2025-08-15",
+          "summary": "Troubleshooting CMMC v6.1 USB monitoring with InfluxDB authentication errors",
+          "key_outcomes": "Identified org ID vs org name authentication inconsistencies"
+        },
+        {
+          "date": "2025-07-31", 
+          "summary": "CMMC Telegraf deployment and version upgrade to 1.30.2",
+          "key_outcomes": "Deployment script created for comprehensive monitoring"
+        }
+      ],
+      "unresolved_issues": [
+        "PowerShell type casting errors in USB event processing",
+        "Standardizing InfluxDB authentication across all systems"
+      ]
+    },
+    "jobai_system": {
+      "key_topics": [
+        "Manufacturing job analysis and AI recommendations",
+        "SQL view development and optimization",
+        "PowerBI integration for data access",
+        "Browser-based interface for guest users",
+        "Vendor operations tracking and risk assessment",
+        "Machine workload analysis and bottleneck detection"
+      ],
+      "recent_discussions": [
+        {
+          "date": "2025-08-17",
+          "summary": "PowerBI data connections and view optimization for JobAI system",
+          "key_outcomes": "Connected 7 key views to PowerBI for comprehensive analysis"
+        },
+        {
+          "date": "2025-08-18",
+          "summary": "Browser deployment strategy for guest users in Teams",
+          "key_outcomes": "Recommended PowerBI API direct approach for security and performance"
+        }
+      ],
+      "system_evolution": [
+        "Version 1: Basic views (vw_ActiveJobsForAnalysis, etc.)",
+        "Version 3.4_FIXED: Enhanced system with ship date integration and improved intelligence"
+      ]
+    },
+    "excel_dashboards": {
+      "key_topics": [
+        "Machine status monitoring and visualization",
+        "Color-coded status indicators and legends",
+        "Picture-based status implementation",
+        "Real-time dashboard updates"
+      ],
+      "recent_discussions": [
+        {
+          "date": "2025-08-17",
+          "summary": "Machine shop status legend development with visual indicators",
+          "key_outcomes": "Defined status categories and implementation approach"
+        }
+      ]
+    },
+    "powerbi_connectivity": {
+      "key_topics": [
+        "Data refresh optimization and performance",
+        "Incremental refresh implementation", 
+        "DirectQuery vs Import mode analysis",
+        "Guest user access through Teams",
+        "SQL view optimization and indexing"
+      ],
+      "recent_discussions": [
+        {
+          "date": "2025-04-11",
+          "summary": "PowerBI to Excel refresh optimization strategies",
+          "key_outcomes": "Identified incremental refresh and SQL optimization approaches"
+        }
+      ]
+    }
+  },
+  "recurring_themes": [
+    "Guest user access limitations in Teams environment",
+    "Data security and compliance requirements",
+    "Real-time dashboard performance optimization",
+    "Enterprise PowerShell deployment and automation",
+    "Manufacturing intelligence and AI-driven insights"
+  ],
+  "technical_patterns": [
+    "SQL Server → PowerBI → Excel Online → Teams data flow",
+    "PowerShell scripting for enterprise deployment",
+    "Browser-based interfaces for limited-access users",
+    "JSON configuration and data structure management"
+  ],
+  "last_updated": "2025-08-22"
+}

@@ -1,0 +1,63 @@
+{
+  "technical_preferences": {
+    "programming_languages": ["PowerShell", "SQL", "JavaScript"],
+    "platforms": ["Windows", "SQL Server", "PowerBI", "Teams"],
+    "development_approach": "Pragmatic problem-solving with continuous learning focus - select technologies based on client needs, learning value, and long-term supportability",
+    "preferred_solutions": [
+      "MS Teams-based deployment for remote client collaboration",
+      "Excel Online dashboards for broad client accessibility",
+      "SQL-based data analytics for reliable, scalable reporting",
+      "PowerBI for advanced business intelligence when appropriate",
+      "PowerShell for Windows automation and deployment",
+      "Node.js for advanced, flexible web applications",
+      "JSON for structured data management and configuration"
+    ],
+    "technical_constraints": [
+      "Client on-premises data requirements (aerospace/defense security)",
+      "Guest user access limitations in Teams environments", 
+      "Enterprise security compliance (CMMC, ISO standards)",
+      "Legacy system integration requirements across diverse client base",
+      "Read-only deployment model for many client users",
+      "Remote deployment and support only (minimal on-site presence)",
+      "Cross-industry compatibility requirements",
+      "Small team resource constraints for maintenance and support"
+    ]
+  },
+  "infrastructure": {
+    "database_systems": ["SQL Server", "InfluxDB"],
+    "business_intelligence": ["PowerBI Desktop", "PowerBI Service"],
+    "monitoring_tools": ["Grafana", "Telegraf"],
+    "enterprise_systems": ["JobBoss ERP"],
+    "connectivity": ["On-Prem Data Gateway"],
+    "security_tools": []
+  },
+  "system_architecture": {
+    "data_flow": "Client SQL Server → PowerBI Service → Excel Online → Teams (primary model) | Direct API access for advanced applications",
+    "authentication_methods": [
+      "Teams-based authentication for client users",
+      "SQL Server integrated authentication",
+      "PowerBI service authentication",
+      "InfluxDB token-based authentication for monitoring systems"
+    ],
+    "network_topology": "Remote consulting model - connect to client networks via Teams, VPN, or secure remote access as required",
+    "backup_strategies": [
+      "Client data remains on client systems (no data custody)",
+      "Configuration and solution templates maintained in IQ Associates repositories",
+      "Documentation and implementation guides for client knowledge transfer"
+    ],
+    "deployment_methods": [
+      "PowerShell scripting for automated client system deployment",
+      "Teams-based collaboration and solution delivery",
+      "Excel Online for dashboard deployment",
+      "PowerBI publication to client or shared workspaces",
+      "Node.js applications hosted as appropriate for client needs"
+    ]
+  },
+  "technical_standards": {
+    "coding_conventions": [],
+    "documentation_requirements": [],
+    "testing_procedures": [],
+    "deployment_procedures": []
+  },
+  "last_updated": "2025-08-22"
+}

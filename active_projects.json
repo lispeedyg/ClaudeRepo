@@ -1,0 +1,276 @@
+{
+  "projects": {
+    "cmmc_implementation": {
+      "name": "CMMC Implementation",
+      "status": "active",
+      "priority": "high",
+      "description": "CMMC v2 compliance monitoring system with USB event tracking and cybersecurity monitoring",
+      "current_version": "v6.2.1",
+      "stakeholders": [
+        "IT Security Team",
+        "Compliance Officers"
+      ],
+      "timeline": {
+        "started": "Unknown",
+        "current_milestone": "Troubleshooting authentication issues",
+        "next_milestone": "Deploy fixed authentication across all systems"
+      },
+      "technical_details": {
+        "platforms": ["PowerShell", "InfluxDB", "Telegraf", "Grafana"],
+        "components": [
+          "Enhanced USB Event Collector v6.1",
+          "InfluxDB data collection",
+          "Telegraf deployment script",
+          "PowerShell remoting configuration",
+          "Grafana dashboards"
+        ],
+        "data_sources": [
+          "USB monitoring events",
+          "Windows Security logs",
+          "Network connectivity tests",
+          "Security posture assessments"
+        ],
+        "deployment_targets": ["SHOPPC-01", "Multiple Windows endpoints"]
+      },
+      "current_challenges": [
+        "PowerShell script type casting errors (op_Addition method issues)",
+        "InfluxDB 401 Unauthorized errors with org ID 4be0c8141e6cdb52",
+        "Inconsistent authentication between org name 'AIM' and org ID",
+        "Telegraf version mismatch issues (1.29.1 vs 1.30.2)"
+      ],
+      "next_steps": [
+        "Fix PowerShell arithmetic operations in USB event processing",
+        "Standardize InfluxDB authentication (AIM vs org ID)",
+        "Complete Telegraf upgrades across all endpoints",
+        "Deploy comprehensive monitoring to all CMMC systems"
+      ],
+      "compliance_requirements": [
+        "CMMC v2 Level 2 compliance",
+        "USB device tracking and monitoring",
+        "Security event logging",
+        "Continuous monitoring and reporting"
+      ],
+      "notes": [
+        "Core monitoring pipeline is functional despite errors",
+        "Successfully transmitting 24-32 events per batch",
+        "Network connectivity tests passing (5/5 targets)",
+        "PowerShell remoting configured for enterprise deployment"
+      ]
+    },
+    "jobai_system": {
+      "name": "JobAI System for Machining Company",
+      "status": "active",
+      "priority": "high",
+      "description": "AI-powered manufacturing analysis system for job scheduling, vendor operations, and workload optimization",
+      "current_version": "3.4_FIXED",
+      "stakeholders": [
+        "Manufacturing managers",
+        "Shop floor operators",
+        "Guest users in Teams environment"
+      ],
+      "timeline": {
+        "started": "Unknown",
+        "current_milestone": "PowerBI integration and browser deployment",
+        "next_milestone": "Complete guest user browser interface"
+      },
+      "technical_details": {
+        "platforms": ["SQL Server", "PowerBI", "Excel Online", "Teams", "HTML/JavaScript"],
+        "database_views": [
+          "vw_EnhancedJobAnalysis",
+          "vw_MachiningAnalysis", 
+          "vw_OperatorPerformance",
+          "vw_VendorOperationsAnalysis",
+          "vw_WorkloadAnalysis",
+          "vw_JobSummary",
+          "vw_ExecutiveDashboard"
+        ],
+        "integrations": [
+          "PowerBI REST API",
+          "Excel JavaScript API",
+          "JobBoss ERP integration"
+        ],
+        "data_sources": [
+          "Job routing data",
+          "Machine status tracking",
+          "Vendor operations",
+          "Operator performance metrics",
+          "Ship date tracking from vw_shipmentsGG"
+        ]
+      },
+      "features": [
+        "Real-time job analysis",
+        "Vendor operations tracking and risk assessment",
+        "Workload capacity analysis and bottleneck detection",
+        "Schedule risk assessment (OVERDUE, CRITICAL, URGENT)",
+        "Machining operation intelligence",
+        "Executive dashboard and reporting",
+        "Browser-based interface for guest users"
+      ],
+      "current_challenges": [
+        "Guest user access limitations in Teams environment",
+        "PowerBI API authentication for external access",
+        "Browser compatibility for read-only Excel users",
+        "Data refresh optimization between SQL/PowerBI/Excel"
+      ],
+      "next_steps": [
+        "Deploy PowerBI Web API for direct data access",
+        "Implement JavaScript interface in Excel browser",
+        "Test guest user workflow in Teams environment",
+        "Optimize data refresh performance"
+      ],
+      "notes": [
+        "Previous iteration used separate views (vw_ActiveJobsForAnalysis, etc.)",
+        "Enhanced system includes ship date integration and improved intelligence",
+        "Designed for manufacturing job analysis (example: Job 1317549)",
+        "Browser-based deployment targets guest users without full access"
+      ]
+    },
+    "excel_dashboards": {
+      "name": "Excel Dashboards",
+      "status": "active", 
+      "priority": "medium",
+      "description": "Manufacturing machine status dashboards with real-time monitoring and color-coded status indicators",
+      "stakeholders": [
+        "Shop floor managers",
+        "Machine operators",
+        "Production planning team"
+      ],
+      "timeline": {
+        "current_milestone": "Picture-based status legend implementation",
+        "next_milestone": "Deploy comprehensive machine monitoring"
+      },
+      "technical_details": {
+        "platforms": ["Excel Online", "Teams", "PowerBI integration"],
+        "dashboard_types": [
+          "Machine shop status dashboard",
+          "Real-time machine status tracking", 
+          "Production progress monitoring"
+        ],
+        "data_sources": [
+          "Machine status data",
+          "Job progress tracking",
+          "Operator activity logs",
+          "Production schedule data"
+        ],
+        "visualization_features": [
+          "Color-coded status indicators (Green/Yellow/Red)",
+          "Picture-based status legends",
+          "Time-based status tracking",
+          "Progress percentage displays"
+        ]
+      },
+      "status_definitions": {
+        "ACTIVE": "Running production (<8hrs activity)",
+        "IDLE": "No updates >8hrs (INVESTIGATE!)", 
+        "OFFLINE": "Job complete OR available for new work"
+      },
+      "current_challenges": [
+        "Picture-based legend implementation in Excel",
+        "Status indicator positioning and formatting",
+        "Real-time data refresh optimization"
+      ],
+      "next_steps": [
+        "Complete picture-based status legend guide",
+        "Implement automated status color coding",
+        "Deploy across all machine monitoring dashboards"
+      ],
+      "notes": [
+        "Focus on visual clarity for shop floor users",
+        "Time format: 2h = 2 hours, 1d4h = 1 day 4 hours",
+        "Business hours tracking (weekends excluded)",
+        "Priority on investigating YELLOW (IDLE) machines"
+      ]
+    },
+    "powerbi_data_connectivity": {
+      "name": "PowerBI Data Connectivity via SQL Views",
+      "status": "active",
+      "priority": "high", 
+      "description": "Enterprise data connectivity architecture using PowerBI with On-Prem Data Gateway for SQL Server integration",
+      "stakeholders": [
+        "Data analysts",
+        "Business intelligence team",
+        "End users in Teams environment"
+      ],
+      "timeline": {
+        "current_milestone": "Optimize refresh performance and incremental updates",
+        "next_milestone": "Deploy optimized data pipeline"
+      },
+      "technical_details": {
+        "connection_type": "On-Prem Data Gateway",
+        "architecture": "SQL Server → PowerBI Service → Excel Online → Teams",
+        "sql_views": [
+          "Multiple manufacturing and business intelligence views",
+          "JobAI analysis views",
+          "Executive dashboard views"
+        ],
+        "data_flow": [
+          "SQL Server source data",
+          "PowerBI Desktop development",
+          "PowerBI Service publication", 
+          "Excel Online consumption",
+          "Teams environment access"
+        ],
+        "optimization_strategies": [
+          "Incremental refresh policies",
+          "DirectQuery vs Import mode analysis",
+          "Change Data Capture (CDC) implementation",
+          "Materialized views consideration"
+        ]
+      },
+      "performance_considerations": {
+        "current_issues": [
+          "Slow refresh times for large datasets",
+          "Network latency in multi-tier architecture",
+          "Guest user access limitations"
+        ],
+        "optimization_approaches": [
+          "Implement incremental refresh in PowerBI",
+          "Use date/timestamp filtering for modified data only",
+          "Optimize SQL view indexing and execution plans",
+          "Configure appropriate PowerBI capacity resources"
+        ]
+      },
+      "current_challenges": [
+        "Refresh time optimization",
+        "Guest user data access in Teams",
+        "Balancing real-time needs vs performance",
+        "Managing data volumes across multiple connection points"
+      ],
+      "next_steps": [
+        "Implement incremental refresh policies",
+        "Test DirectQuery vs Import performance",
+        "Deploy optimized SQL view indexing",
+        "Configure automated refresh schedules"
+      ],
+      "notes": [
+        "Guest users access Excel in read-only mode through browser",
+        "PowerBI API direct access bypasses Excel for some use cases",
+        "Critical for supporting JobAI system and dashboards",
+        "Foundation for multiple business intelligence initiatives"
+      ]
+    }
+  },
+  "cross_project_dependencies": [
+    {
+      "projects": ["jobai_system", "powerbi_data_connectivity"],
+      "relationship": "JobAI system depends on PowerBI connectivity for data access"
+    },
+    {
+      "projects": ["excel_dashboards", "powerbi_data_connectivity"], 
+      "relationship": "Excel dashboards consume data through PowerBI connections"
+    },
+    {
+      "projects": ["jobai_system", "excel_dashboards"],
+      "relationship": "JobAI provides analysis triggered from Excel dashboard interfaces"
+    }
+  ],
+  "technology_stack": {
+    "databases": ["SQL Server", "InfluxDB"],
+    "business_intelligence": ["PowerBI Desktop", "PowerBI Service"],
+    "frontend": ["Excel Online", "Teams", "HTML/JavaScript"],
+    "monitoring": ["Grafana", "Telegraf"],
+    "scripting": ["PowerShell", "JavaScript"],
+    "enterprise_tools": ["JobBoss ERP", "On-Prem Data Gateway"]
+  },
+  "last_updated": "2025-08-22"
+}

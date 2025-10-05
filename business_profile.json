@@ -1,0 +1,116 @@
+{
+  "profile": {
+    "role": "Owner/CEO",
+    "company_name": "IQ Associates, LLC",
+    "industry": "Manufacturing Technology Solutions",
+    "company_size": "2 core team members (sole proprietor LLC with contractors as needed)",
+    "department": "All departments",
+    "primary_responsibilities": [
+      "Strategic business direction",
+      "Technology implementation and oversight",
+      "CMMC compliance and cybersecurity",
+      "Manufacturing operations optimization",
+      "Business intelligence and analytics",
+      "Client relationships and project delivery"
+    ],
+    "reporting_structure": {
+      "reports_to": "Self (Owner)",
+      "direct_reports": "All staff",
+      "key_stakeholders": [
+        "Clients",
+        "Manufacturing partners",
+        "Compliance auditors",
+        "Technology vendors"
+      ]
+    }
+  },
+  "business_context": {
+    "company_focus": "Quality systems consulting, cybersecurity compliance, and data analytics solutions for manufacturing and industrial clients",
+    "core_expertise": [
+      "ISO family standards implementation (9001, 13485, AS9001, automotive, environmental)",
+      "Quality system auditing and optimization",
+      "CMMC cybersecurity compliance for aerospace/automotive supply chain",
+      "Manufacturing data analytics and business intelligence",
+      "Custom dashboard and reporting solutions",
+      "Process optimization and automation"
+    ],
+    "service_delivery_model": [
+      "Remote consulting via MS Teams",
+      "Excel-based dashboards deployed as read-only web applications",
+      "SQL-based data analysis and reporting",
+      "Node.js applications for advanced reporting flexibility",
+      "On-site quality auditing when required"
+    ],
+    "client_industries": [
+      "Aerospace and defense contractors (2nd/3rd tier suppliers)",
+      "Automotive manufacturing",
+      "Electronics and plastics manufacturing",
+      "Software companies",
+      "Optical fiber and telecommunications",
+      "Textile and yarn mills",
+      "Semiconductor/wafer fabrication",
+      "Range from 2-person operations to multi-billion dollar companies"
+    ],
+    "competitive_advantages": [
+      "25+ years UL experience in safety standards and regulatory engineering",
+      "Established first ISO9001 quality registrar in United States",
+      "Audited thousands of companies across virtually every industry",
+      "Deep understanding of how companies work and fail",
+      "Unique ability to leverage existing quality systems for CMMC compliance (~1/3 overlap)",
+      "Technology integration expertise with quality systems knowledge"
+    ],
+    "key_systems": [
+      "MS Teams for client collaboration and solution deployment",
+      "SQL Server for data analytics",
+      "PowerBI for business intelligence",
+      "Excel Online for dashboard delivery",
+      "Node.js for advanced reporting applications",
+      "Various client ERP systems (JobBoss, etc.)"
+    ],
+    "business_priorities": [
+      "Expanding cybersecurity compliance services (CMMC)",
+      "Advanced data analytics and AI-driven insights",
+      "Scaling technology solutions across client base",
+      "Continuous learning and adoption of new automation tools"
+    ],
+    "current_initiatives": [
+      "CMMC implementation for aerospace/automotive clients",
+      "AI-powered manufacturing analytics (JobAI system)",
+      "Advanced dashboard development with Node.js",
+      "Process optimization through data-driven insights"
+    ],
+    "pain_points": [
+      "Guest user access limitations in Teams environments",
+      "Scaling custom solutions across diverse client needs",
+      "Balancing security requirements with usability",
+      "Managing complex data connectivity across multiple client systems"
+    ]
+  },
+  "work_environment": {
+    "primary_tools": [
+      "SQL Server",
+      "PowerBI", 
+      "Excel",
+      "Teams",
+      "PowerShell"
+    ],
+    "access_constraints": [
+      "Guest users in Teams environment",
+      "Read-only Excel access for many users",
+      "On-premises data security requirements"
+    ],
+    "team_structure": [
+      {
+        "name": "Owner (Chemical Engineer, 25+ years UL experience)",
+        "role": "Technical lead, strategy, client relations, all project implementation",
+        "expertise": ["Quality systems", "ISO standards", "CMMC compliance", "Data analytics", "Technology implementation"]
+      },
+      {
+        "name": "Tom",
+        "role": "Trainer and Quality Auditor",
+        "expertise": ["Quality system training", "Audit procedures", "Process optimization"]
+      }
+    ]
+  },
+  "last_updated": "2025-08-22"
+}
