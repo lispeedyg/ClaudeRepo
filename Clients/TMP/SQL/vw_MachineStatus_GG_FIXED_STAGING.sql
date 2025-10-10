@@ -621,7 +621,7 @@ MachineStatusCTE AS (
                     LEFT JOIN THURO.dbo.Job_Operation_Time jot_setup with (NoLock) ON jo_setup.Job_Operation = jot_setup.Job_Operation
                         AND jot_setup.Work_Date >= DATEADD(DAY, -90, GETDATE())
                 WHERE jo_setup.Work_Center = 'SM SETUPM'
-                    AND jo_setup.Status NOT IN ('Complete', 'Closed')
+                    AND jo_setup.Status NOT IN ('C', 'Complete', 'Closed')  -- CRITICAL FIX: Include 'C' for database status code
                 GROUP BY jo_setup.Job, jo_setup.Job_Operation, jo_setup.Actual_Start
             ) job_setup ON job_setup.Job = j.Job
             
@@ -681,7 +681,7 @@ MachineStatusCTE AS (
                         LEFT JOIN THURO.dbo.Job_Operation_Time jot_setup with (NoLock) ON jo_setup.Job_Operation = jot_setup.Job_Operation
                             AND jot_setup.Work_Date >= DATEADD(DAY, -14, GETDATE())
                     WHERE jo_setup.Work_Center = 'SM SETUPM'
-                        AND jo_setup.Status NOT IN ('Complete', 'Closed')
+                        AND jo_setup.Status NOT IN ('C', 'Complete', 'Closed')  -- CRITICAL FIX: Include 'C'
                         AND j_setup.Status NOT IN ('Complete', 'Closed', 'Shipped')
                     GROUP BY jo_setup.Job, jo_setup.Job_Operation, jo_setup.Actual_Start, j_setup.Customer, j_setup.Part_Number
                 ) setup_with_targets
@@ -840,7 +840,7 @@ MachineStatusCTE AS (
                         INNER JOIN THURO.dbo.Job j_setup with (NoLock) ON jo_setup.Job = j_setup.Job
                         LEFT JOIN THURO.dbo.Job_Operation_Time jot_setup with (NoLock) ON jo_setup.Job_Operation = jot_setup.Job_Operation
                             AND jot_setup.Work_Date >= DATEADD(DAY, -14, GETDATE())
-                    WHERE jo_setup.Work_Center = 'SM SETUPM' AND jo_setup.Status NOT IN ('Complete', 'Closed')
+                    WHERE jo_setup.Work_Center = 'SM SETUPM' AND jo_setup.Status NOT IN ('C', 'Complete', 'Closed')  -- CRITICAL FIX: Include 'C'
                         AND j_setup.Status NOT IN ('Complete', 'Closed', 'Shipped')
                     GROUP BY jo_setup.Job, jo_setup.Job_Operation, jo_setup.Actual_Start, j_setup.Customer, j_setup.Part_Number
                 ) setup_with_targets WHERE target_work_center IS NOT NULL

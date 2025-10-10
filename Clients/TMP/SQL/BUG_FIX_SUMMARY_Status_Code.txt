@@ -1,0 +1,83 @@
+-- ========================================================================
+-- BUG FIX SUMMARY: False Cleanup Warnings
+-- Date: October 6, 2025
+-- ========================================================================
+
+## THE BUG
+
+The view was showing ⚠ CLEANUP warnings for jobs where:
+- Production operation: Status = 'C' (Complete) ✓
+- Setup operation: Status = 'C' (Complete) ✓
+
+Even though BOTH operations were properly closed!
+
+## ROOT CAUSE
+
+The SQL was checking for setup operations to exclude using:
+```sql
+WHERE jo_setup.Work_Center = 'SM SETUPM'
+    AND jo_setup.Status NOT IN ('Complete', 'Closed')  -- ❌ MISSING 'C'!
+```
+
+**The Problem:** JobBoss stores status as single-character codes:
+- 'C' = Complete
+- 'O' = Open
+- 'S' = Started
+- 'R' = Ready
+
+The UI displays these as friendly names ("5 Complete"), but the database stores 'C'.
+
+Since the query was looking for ('Complete', 'Closed') and NOT 'C', it was picking up setup operations that were actually closed!
+
+## THE FIX
+
+Changed all three occurrences to:
+```sql
+WHERE jo_setup.Work_Center = 'SM SETUPM'
+    AND jo_setup.Status NOT IN ('C', 'Complete', 'Closed')  -- ✓ FIXED!
+```
+
+##LOCATIONS FIXED
+
+1. **Line ~623**: job_setup LEFT JOIN
+   - This checks if there's a setup operation still open for the current job
+
+2. **Line ~683**: setup_for_machine subquery (Part 1)
+   - This checks for machines with upcoming staging jobs
+
+3. **Line ~842**: setup_for_missing subquery (Part 2)
+   - This checks for missing machines with staging activity
+
+## WHAT THIS MEANS
+
+**Before Fix:**
+- Job 1317620 shows ⚠ CLEANUP even though SM SETUPM Status = 'C'
+- False positive warnings cluttering the dashboard
+
+**After Fix:**
+- Only TRULY open setup operations (Status = 'S', 'O', 'R') show ⚠ CLEANUP
+- Jobs with properly closed setups show clean status
+
+## TEST CASE - Job 1317620
+
+**Before:**
+- Dashboard: Shows "⚠ CLEANUP: Setup Sandra_J still open from SM-8h"
+- Reality: SM SETUPM operation Status = 'C' (Complete)
+- Result: FALSE POSITIVE
+
+**After:**
+- Dashboard: No cleanup warning
+- Reality: SM SETUPM operation Status = 'C' (Complete)  
+- Result: CORRECT
+
+## TO DEPLOY
+
+1. Run the updated view: `vw_MachineStatus_GG_FIXED_STAGING.sql`
+2. Test by checking job 1317620 in the dashboard
+3. The ⚠ CLEANUP warning should now be GONE
+
+## FILES MODIFIED
+
+- `vw_MachineStatus_GG_FIXED_STAGING.sql` - The corrected view
+
+========================================================================
